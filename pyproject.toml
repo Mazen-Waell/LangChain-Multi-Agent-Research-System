@@ -1,0 +1,31 @@
+[project]
+name = "langchain-multi-agent-research-system"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Mazen-Waell", email = "mazinwael012@gamil.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.12.0",
+    "langchain>=0.2.0",
+    "langchain-community>=0.2.0",
+    "langchain-core>=0.2.0",
+    "langchain-groq>=0.1.0",
+    "lxml>=5.0.0",
+    "python-dotenv>=1.0.0",
+    "readability-lxml>=0.9",
+    "requests>=2.31.0",
+    "rich>=13.7.0",
+    "streamlit>=1.0.0",
+    "tavily-python>=0.3.0",
+    "trafilatura>=2.2.0",
+]
+
+[project.scripts]
+langchain-multi-agent-research-system = "langchain_multi_agent_research_system:main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
