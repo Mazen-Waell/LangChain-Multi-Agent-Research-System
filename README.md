@@ -79,7 +79,7 @@ A multi-agent research system built with LangChain that autonomously researches 
 |---|---|
 | **LangChain** (`langchain`, `langchain-core`) | Agent framework and chain composition |
 | **langchain-groq** | LLM integration — this project runs on **Groq**, not OpenAI |
-| **Groq `openai/gpt-oss-20b`** | The language model powering every agent and chain |
+| **Groq `openai/gpt-oss-120b`** | The language model powering every agent and chain |
 | **Streamlit** | Interactive web UI |
 | **Tavily API** | Web search and source discovery |
 | **BeautifulSoup4** | HTML parsing and fallback content extraction |
@@ -94,7 +94,7 @@ A multi-agent research system built with LangChain that autonomously researches 
 ## 📋 Prerequisites
 
 - Python 3.12 or higher
-- A [Groq API key](https://console.groq.com/keys) (the project uses Groq's **free tier**, `openai/gpt-oss-20b`)
+- A [Groq API key](https://console.groq.com/keys) (the project uses Groq's **free tier**, `openai/gpt-oss-120b`)
 - A [Tavily API key](https://tavily.com)
 
 ---
@@ -202,7 +202,7 @@ This project is deployed on [Streamlit Community Cloud](https://share.streamlit.
 
 ## ⚠️ Challenges We Faced & How We Solved Them
 
-Building this on a **free-tier LLM** (`gpt-oss-20b` via Groq) surfaced several real reliability issues that a more powerful/expensive model might mask. Here's what came up during development and how each was addressed:
+Building this on a **free-tier LLM** (Groq) surfaced several real reliability issues that a more powerful/expensive model might mask. Here's what came up during development and how each was addressed:
 
 ### 1. Reader Agent returning empty responses
 
@@ -235,7 +235,6 @@ Building this on a **free-tier LLM** (`gpt-oss-20b` via Groq) surfaced several r
 
 ## 🔍 Known Limitations
 
-- **Search Agent call count is unbounded.** Its system prompt allows it to re-run `web_search` as many times as it feels necessary. This usually produces better sources, but occasionally results in a long tool-calling chain that can affect response consistency. Constraining this further is a planned improvement.
 - **Free-tier rate limits.** Since the project runs on Groq's free tier, heavy or repeated testing can hit rate limits — if a step fails unexpectedly, check for a `429`/rate-limit error before assuming a code bug.
 - **Bot-blocked sources.** Some sites (e.g., paywalled news, heavily JS-rendered pages) will still fail to scrape even with the PDF/HTML fallback strategies, since they require a full browser (e.g., Playwright) to render.
 
