@@ -165,30 +165,6 @@ This project is deployed on [Streamlit Community Cloud](https://share.streamlit.
 
 **🔗 Live app:** https://langchain-multi-agent-research-systemgit-jugrbtuorgal8sfnhkrku.streamlit.app/
 
-A couple of things differ from running it locally:
-
-- Your `.env` file is **not** pushed to GitHub (it should be in `.gitignore`), so API keys are configured through Streamlit Cloud's **Secrets** manager instead.
-- Secrets defined at the root level of the TOML block are automatically exposed as environment variables at runtime, so `os.getenv("GROQ_API_KEY")` works exactly the same as it does locally — no code changes needed.
-
-### Steps
-
-1. Push your code to GitHub.
-2. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub.
-3. Click **Create app**, then choose **"Deploy an app"** and paste the GitHub URL of `app.py`, e.g.:
-   ```
-   https://github.com/Mazen-Waell/LangChain-Multi-Agent-Research-System/blob/main/app.py
-   ```
-4. Open **Advanced settings**:
-   - Set **Python version** to `3.12` (matches this project's requirements).
-   - Under **Secrets**, add:
-     ```toml
-     GROQ_API_KEY = "your_groq_api_key_here"
-     TAVILY_API_KEY = "your_tavily_api_key_here"
-     ```
-5. Click **Deploy**. The first build takes a few minutes while dependencies install.
-
-> **Note:** On the free tier, the app goes to sleep after periods of inactivity, so the first visit after idle time may take a bit longer to wake up (cold start).
-
 ---
 
 ## 📁 Project Structure
