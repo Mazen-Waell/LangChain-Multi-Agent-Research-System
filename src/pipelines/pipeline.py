@@ -65,11 +65,7 @@ def get_final_agent_text(agent_result: dict) -> str:
     return ""
 
 
-def run_reader_agent_with_retry(
-    reader_agent,
-    reader_prompt: str,
-    max_retries: int = 1,
-) -> str:
+def run_reader_agent_with_retry(reader_agent, reader_prompt: str, max_retries: int = 1,) -> str:
     """
     Invoke the Reader Agent and retry once if it returns no usable
     final text (e.g. the model ended its turn on a bare tool call,
@@ -141,7 +137,7 @@ Find up to 5 relevant sources.
         ]
     })
 
-    search_content = search_result["messages"][-1].content
+    search_content = get_final_agent_text(search_result)
     state["search_results"] = extract_text(search_content)
 
     print("\nSearch Results:\n")
