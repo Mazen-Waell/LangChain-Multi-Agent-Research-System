@@ -155,33 +155,8 @@ Edit the `topic` variable in `main.py` to research a different subject.
 
 ## ☁️ Deployment (Render)
 
-This project can be deployed as a web service on [Render](https://render.com). A few things differ from running it locally:
-
-- Your `.env` file is **not** pushed to GitHub (it should be in `.gitignore`), so API keys must be set manually in Render's dashboard instead.
+This project  deployed as a web service on [Render](https://render.com). A few things differ from running it locally:
 - Render assigns a dynamic port via the `$PORT` environment variable — Streamlit must be told to bind to it explicitly.
-
-### Steps
-
-1. Push your code to GitHub (Render deploys directly from a connected repo).
-2. On Render, create a **New → Web Service** and connect this repository.
-3. Configure the service:
-
-   | Setting | Value |
-   |---|---|
-   | **Environment** | Python 3 |
-   | **Build Command** | `pip install -r requirements.txt` |
-   | **Start Command** | `streamlit run app.py --server.port $PORT --server.address 0.0.0.0` |
-
-4. Under **Environment → Environment Variables**, add:
-
-   | Key | Value |
-   |---|---|
-   | `GROQ_API_KEY` | your Groq API key |
-   | `TAVILY_API_KEY` | your Tavily API key |
-
-5. Deploy. Render will build the service and give you a public URL once it's live.
-
-> **Note:** On Render's free tier, the service spins down after periods of inactivity, so the first request after idle time may take longer to respond (cold start).
 
 ---
 
