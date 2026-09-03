@@ -6,6 +6,12 @@ A multi-agent research system built with LangChain that autonomously researches 
   <strong>🔬 Research Automation • 🤖 Multi-Agent Orchestration • 📝 Intelligent Report Generation</strong>
 </p>
 
+<p align="center">
+  <a href="https://langchain-multi-agent-research-systemgit-jugrbtuorgal8sfnhkrku.streamlit.app/">
+    🚀 Try the live app
+  </a>
+</p>
+
 ---
 
 ## 🌟 Features
@@ -153,35 +159,11 @@ Edit the `topic` variable in `main.py` to research a different subject.
 
 ---
 
-## ☁️ Deployment (Render)
+## ☁️ Deployment (Streamlit Community Cloud)
 
-This project can be deployed as a web service on [Render](https://render.com). A few things differ from running it locally:
+This project is deployed on [Streamlit Community Cloud](https://share.streamlit.io) — free, with no credit card required.
 
-- Your `.env` file is **not** pushed to GitHub (it should be in `.gitignore`), so API keys must be set manually in Render's dashboard instead.
-- Render assigns a dynamic port via the `$PORT` environment variable — Streamlit must be told to bind to it explicitly.
-
-### Steps
-
-1. Push your code to GitHub (Render deploys directly from a connected repo).
-2. On Render, create a **New → Web Service** and connect this repository.
-3. Configure the service:
-
-   | Setting | Value |
-   |---|---|
-   | **Environment** | Python 3 |
-   | **Build Command** | `pip install -r requirements.txt` |
-   | **Start Command** | `streamlit run app.py --server.port $PORT --server.address 0.0.0.0` |
-
-4. Under **Environment → Environment Variables**, add:
-
-   | Key | Value |
-   |---|---|
-   | `GROQ_API_KEY` | your Groq API key |
-   | `TAVILY_API_KEY` | your Tavily API key |
-
-5. Deploy. Render will build the service and give you a public URL once it's live.
-
-> **Note:** On Render's free tier, the service spins down after periods of inactivity, so the first request after idle time may take longer to respond (cold start).
+**🔗 Live app:** https://langchain-multi-agent-research-systemgit-jugrbtuorgal8sfnhkrku.streamlit.app/
 
 ---
 
@@ -288,4 +270,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Support
 
-For support, open an issue on GitHub or contact the maintainers.
+For support, open an issue on GitHub
