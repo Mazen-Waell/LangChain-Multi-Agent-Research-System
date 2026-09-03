@@ -709,6 +709,6 @@ if r:
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="notice">
-    ResearchAgent · Powered by LangChain multi-agent pipeline · Built with Streamlit
+    ResearchAgent · Powered by Groq & LangChain · Built with Streamlit
 </div>
 """, unsafe_allow_html=True)
