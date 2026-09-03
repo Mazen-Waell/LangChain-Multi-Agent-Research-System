@@ -15,7 +15,7 @@ load_dotenv()
 # max_tokens is set explicitly and generously to avoid truncated
 # responses when the agent has to summarize multiple long sources.
 llm = ChatGroq(
-    model="openai/gpt-oss-20b",
+    model="openai/gpt-oss-120b",
     temperature=0,
     max_tokens=8000,
 )
@@ -36,17 +36,7 @@ Rules:
 4. Only perform a second search if the first search does not provide enough reliable sources.
 5. NEVER call `web_search` more than 2 times.
 6. Find up to 5 sources.
-7. Prefer authoritative sources such as:
-   - Gartner
-   - McKinsey
-   - Deloitte
-   - MIT
-   - Stanford
-   - official company reports
-   - government organizations
-   - peer-reviewed research
-8. Avoid low-quality blogs, Medium articles, and SEO websites when better sources are available.
-9. Once you have enough sources, STOP searching.
+7. Once you have enough sources, STOP searching.
 
 Your final answer MUST contain ONLY this format:
 
@@ -85,32 +75,92 @@ def build_search_agent():
 
 READER_SYSTEM_PROMPT = """You are the Reader Agent in a research pipeline.
 
-Your job:
-1. You will receive a list of sources (Title + URL).
-2. For EACH source you decide to use (up to 3), call the `scrape_url` tool
-   with that exact URL.
-3. After you have called the tool for ALL the sources you need,
-   you MUST write a final structured summary as plain text.
-   Do NOT end your turn on a tool call - always follow tool calls
-   with a final written answer.
-4. Never invent facts. Only use content actually returned by scrape_url.
-5. If a tool call returns "SCRAPING_FAILED", skip that source entirely
-   and do not report invented content for it.
-6. Keep bullet points concise: at most 10-15 per source.
+Your job is to read and extract verified information from the sources
+provided by the Search Agent.
 
-Your final answer MUST follow this exact structure, repeated per
-successfully scraped source:
+Rules:
+
+1. You will receive a list of sources containing Title + URL.
+
+2. Read UP TO 3 sources maximum.
+
+3. You MUST attempt to scrape the first 3 valid sources provided.
+   Do not choose only one source if multiple valid sources are available.
+
+4. Prefer sources from authoritative organizations such as:
+   - Gartner
+   - McKinsey
+   - Deloitte
+   - MIT
+   - Stanford
+   - official company reports
+   - government organizations
+   - academic research
+
+5. If authoritative sources are available, prioritize them over:
+   - blogs
+   - marketing websites
+   - content aggregators
+   - secondary articles
+      
+6. For each source, call the `scrape_url` tool using the exact URL
+   provided by the Search Agent.
+
+7. After scraping a source:
+   - Use ONLY information returned by `scrape_url`.
+   - Never invent or assume information.
+   - Do not use your own prior knowledge.
+   - If the source does not contain useful information about the topic,
+     clearly indicate that no relevant information was found.
+
+8. If `scrape_url` returns "SCRAPING_FAILED":
+   - Skip that source.
+   - Do NOT invent or reconstruct its content.
+   - Continue with the next available source.
+
+9. After attempting to read all required sources,
+   you MUST provide a final written answer.
+   NEVER end your turn immediately after a tool call.
+
+10. Keep the extracted information concise.
+    Use approximately 5-10 important bullet points per successful source.
+
+
+
+11. Every factual claim in your output must be directly supported
+    by the content returned from `scrape_url`.
+
+Your final answer MUST follow this structure:
 
 SOURCE
+Title: ...
 URL: ...
 Verified Content:
 - ...
 - ...
+- ...
 
-If none of the sources could be scraped successfully, your final answer
-must be exactly: NO_USABLE_CONTENT
+SOURCE
+Title: ...
+URL: ...
+Verified Content:
+- ...
+- ...
+- ...
+
+SOURCE
+Title: ...
+URL: ...
+Verified Content:
+- ...
+- ...
+- ...
+
+If none of the sources could be scraped successfully,
+your final answer must be exactly:
+
+NO_USABLE_CONTENT
 """
-
 
 def build_reader_agent():
     return create_agent(
