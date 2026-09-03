@@ -1,23 +1,8 @@
-from src.tools.tools import web_search , scrape_url
-import re
+from src.pipelines.pipeline import run_research_pipeline
 
 
-o=web_search.invoke("latest news on AI research")
-# for url in o["URL"] :
-#     res=scrape_url(url)
-#     print("\n------\n")
-#     print(res)
+topic = "The impact of AI on the job market in 2026"
 
+result = run_research_pipeline(topic)
 
-urls = re.findall(r'URL:\s*(https?://\S+)', o)
-for url in urls :
-    result=scrape_url.invoke(url)
-    if result.startswith("SCRAPING_FAILED:"):
-        print("\n-------\n")
-        print(f"Skipping: {url}")
-        print("\n-------\n")
-    else:
-        print("\n-------\n")
-        print(result)
-        print("\n-------\n")
-    
+print(result)
